@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etoama Biology Readings</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f8f5;color:#173322}
+header{background:#176b3a;color:white;padding:22px 18px;border-radius:0 0 24px 24px}
+header h1{margin:0;font-size:25px}header p{margin:7px 0 0;opacity:.9}
+main{padding:18px;max-width:850px;margin:auto}
+.search{width:100%;padding:14px;border:1px solid #cbd9cf;border-radius:12px;font-size:16px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.card{background:white;border-radius:16px;padding:18px;box-shadow:0 3px 12px #0000000d;cursor:pointer;border:1px solid #e0ebe3}
+.card h3{margin:8px 0 5px;font-size:16px}.card p{margin:0;color:#607568;font-size:13px}
+.icon{font-size:27px}
+.section{margin:25px 0 12px;font-size:19px}
+.lesson{display:none;background:white;padding:20px;border-radius:18px;box-shadow:0 3px 15px #00000010}
+.back{border:0;background:#e8f2eb;padding:10px 14px;border-radius:10px;cursor:pointer;margin-bottom:14px}
+.lesson h2{color:#176b3a}.key{background:#edf7f0;padding:14px;border-radius:12px;margin:15px 0}
+button.quiz{background:#176b3a;color:white;border:0;padding:12px 18px;border-radius:10px;cursor:pointer}
+.question{padding:15px 0;border-bottom:1px solid #e3ebe5}.result{font-weight:bold;margin-top:15px}
+footer{text-align:center;padding:25px;color:#718077;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🧬 Etoama Biology Readings</h1>
+  <p>Learn Biology. Understand it. Remember it.</p>
+</header>
+
+<main>
+<input class="search" id="search" placeholder="Search Biology topics..." oninput="filterTopics()">
+
+<div id="home">
+<h2 class="section">📚 Biology Readings</h2>
+<div class="grid" id="topics"></div>
+
+<h2 class="section">🎯 Quick Practice</h2>
+<div class="card" onclick="showLesson('quiz')">
+<div class="icon">📝</div><h3>Biology Quiz</h3><p>Test what you have learned.</p>
+</div>
+
+<h2 class="section">🔬 More Learning</h2>
+<div class="grid">
+<div class="card"><div class="icon">🔬</div><h3>Biology Practical</h3><p>Specimens, experiments and observations.</p></div>
+<div class="card"><div class="icon">🎯</div><h3>Mock Examination</h3><p>Prepare for school examinations.</p></div>
+<div class="card"><div class="icon">📊</div><h3>My Progress</h3><p>Track your learning progress.</p></div>
+</div>
+</div>
+
+<div id="lesson" class="lesson"></div>
+</main>
+<footer>© 2026 Etoama Biology Readings</footer>
+
+<script>
+const data = {
+"Cell Biology":{
+desc:"The study of cells, their structures and functions.",
+body:`<h2>Cell Biology</h2><p>A <b>cell</b> is the basic structural and functional unit of life. All living organisms are made up of one or more cells.</p>
+<div class="key"><b>Key points</b><br>• Cell membrane controls movement of substances.<br>• Cytoplasm is where many chemical reactions occur.<br>• The nucleus contains genetic material.<br>• Plant cells have a cell wall and chloroplasts.</div>
+<h3>Plant and Animal Cells</h3><p>Plant cells usually have a cellulose cell wall, chloroplasts and a large permanent vacuole. Animal cells do not have these structures in the same form.</p>`
+},
+"Nutrition":{
+desc:"How organisms obtain and use food.",
+body:`<h2>Nutrition</h2><p>Nutrition is the process by which organisms obtain and use nutrients for energy, growth, repair and maintenance.</p>
+<div class="key"><b>Important terms</b><br>Autotrophic nutrition: organisms make their own food.<br>Heterotrophic nutrition: organisms obtain food from other organisms.</div>
+<h3>Photosynthesis</h3><p>Green plants use light energy to manufacture glucose from carbon dioxide and water, with chlorophyll involved in the process.</p>`
+},
+"Respiration":{
+desc:"Release of energy from food.",
+body:`<h2>Respiration</h2><p>Respiration is the chemical process by which energy is released from food in living cells.</p>
+<div class="key"><b>Aerobic respiration</b><br>It uses oxygen and releases a large amount of energy.</div>
+<p>Respiration should not be confused with breathing. Breathing is the physical movement of air into and out of the respiratory system.</p>`
+},
+"Reproduction":{
+desc:"How organisms produce new individuals.",
+body:`<h2>Reproduction</h2><p>Reproduction is the biological process by which organisms produce offspring of their kind.</p>
+<div class="key"><b>Types</b><br>• Asexual reproduction involves one parent.<br>• Sexual reproduction normally involves the fusion of male and female gametes.</div>
+<p>Reproduction ensures the continuity of a species.</p>`
+},
+"Genetics":{
+desc:"Study of heredity and variation.",
+body:`<h2>Genetics</h2><p>Genetics is the study of heredity and variation in organisms.</p>
+<div class="key"><b>Key terms</b><br>Gene: a unit of heredity.<br>Allele: an alternative form of a gene.<br>Chromosome: a structure containing genetic material.<br>Genotype: genetic constitution of an organism.</div>`
+},
+"Ecology":{
+desc:"Relationships between organisms and their environment.",
+body:`<h2>Ecology</h2><p>Ecology is the study of interactions between organisms and their physical environment.</p>
+<div class="key"><b>Key terms</b><br>Habitat: place where an organism lives.<br>Population: organisms of the same species in an area.<br>Community: populations of different species living together.<br>Ecosystem: organisms and their physical environment interacting.</div>`
+},
+"Excretion":{
+desc:"Removal of metabolic waste products.",
+body:`<h2>Excretion</h2><p>Excretion is the removal of metabolic waste products from the body.</p>
+<div class="key"><b>Examples</b><br>Kidneys remove nitrogenous wastes and regulate water and salts.<br>Lungs remove carbon dioxide and water vapour.<br>Skin removes sweat.</div>`
+},
+"Transport System":{
+desc:"Movement of substances around organisms.",
+body:`<h2>Transport System</h2><p>Transport systems move substances such as oxygen, nutrients, hormones and waste products around organisms.</p>
+<div class="key"><b>In humans</b><br>The circulatory system consists mainly of the heart, blood and blood vessels.</div>`
+},
+"Classification":{
+desc:"Grouping organisms according to similarities and differences.",
+body:`<h2>Classification</h2><p>Biological classification is the systematic grouping of organisms based on similarities, differences and evolutionary relationships.</p>
+<div class="key"><b>Why classify?</b><br>It makes identification easier and helps scientists communicate about organisms.</div>`
+},
+"Microbiology":{
+desc:"Study of microscopic organisms.",
+body:`<h2>Microbiology</h2><p>Microbiology is the study of microorganisms, including bacteria, fungi, protozoa and some microscopic algae.</p>
+<div class="key"><b>Important</b><br>Microorganisms can be beneficial, harmful, or both depending on the organism and circumstances.</div>`
+}
+};
+
+const topicsEl=document.getElementById("topics");
+function renderTopics(filter=""){
+ topicsEl.innerHTML="";
+ Object.entries(data).filter(([k,v])=>(k+" "+v.desc).toLowerCase().includes(filter.toLowerCase())).forEach(([k,v])=>{
+  topicsEl.innerHTML += `<div class="card" onclick="showLesson('${k}')"><div class="icon">📖</div><h3>${k}</h3><p>${v.desc}</p></div>`;
+ });
+}
+function showLesson(name){
+ document.getElementById("home").style.display="none";
+ const l=document.getElementById("lesson"); l.style.display="block";
+ if(name==="quiz"){l.innerHTML=quizHTML();return}
+ l.innerHTML=`<button class="back" onclick="goHome()">← Back to topics</button>${data[name].body}
+ <div class="key"><b>Revision tip:</b> Read the topic, write down the key points, then test yourself without looking at the notes.</div>
+ <button class="quiz" onclick="showLesson('quiz')">Take a Quiz →</button>`;
+ window.scrollTo(0,0);
+}
+function goHome(){document.getElementById("lesson").style.display="none";document.getElementById("home").style.display="block";window.scrollTo(0,0)}
+function filterTopics(){renderTopics(document.getElementById("search").value)}
+function quizHTML(){return `<button class="back" onclick="goHome()">← Back</button><h2>📝 Biology Quiz</h2>
+<div class="question"><b>1. What is the basic structural unit of life?</b><br><label><input type="radio" name="q1" value="a"> Tissue</label><br><label><input type="radio" name="q1" value="b"> Cell</label><br><label><input type="radio" name="q1" value="c"> Organ</label></div>
+<div class="question"><b>2. Which organelle contains genetic material in a typical eukaryotic cell?</b><br><label><input type="radio" name="q2" value="a"> Nucleus</label><br><label><input type="radio" name="q2" value="b"> Ribosome</label><br><label><input type="radio" name="q2" value="c"> Cell wall</label></div>
+<div class="question"><b>3. What is the main purpose of respiration?</b><br><label><input type="radio" name="q3" value="a"> Release energy</label><br><label><input type="radio" name="q3" value="b"> Produce sunlight</label><br><label><input type="radio" name="q3" value="c"> Make chromosomes</label></div>
+<button class="quiz" onclick="markQuiz()">Submit Quiz</button><div id="result" class="result"></div>`}
+function markQuiz(){
+ let answers={q1:"b",q2:"a",q3:"a"},score=0;
+ for(let q in answers){let x=document.querySelector(`input[name="${q}"]:checked`);if(x&&x.value===answers[q])score++}
+ document.getElementById("result").textContent=`Your score: ${score}/3`;
+}
+renderTopics();
+</script>
+</body>
+</html>
