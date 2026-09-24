@@ -1,145 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Etoama Biology Readings</title>
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#116b3a"><title>Etoama Biology Readings</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f8f5;color:#173322}
-header{background:#176b3a;color:white;padding:22px 18px;border-radius:0 0 24px 24px}
-header h1{margin:0;font-size:25px}header p{margin:7px 0 0;opacity:.9}
-main{padding:18px;max-width:850px;margin:auto}
-.search{width:100%;padding:14px;border:1px solid #cbd9cf;border-radius:12px;font-size:16px;margin-bottom:18px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.card{background:white;border-radius:16px;padding:18px;box-shadow:0 3px 12px #0000000d;cursor:pointer;border:1px solid #e0ebe3}
-.card h3{margin:8px 0 5px;font-size:16px}.card p{margin:0;color:#607568;font-size:13px}
-.icon{font-size:27px}
-.section{margin:25px 0 12px;font-size:19px}
-.lesson{display:none;background:white;padding:20px;border-radius:18px;box-shadow:0 3px 15px #00000010}
-.back{border:0;background:#e8f2eb;padding:10px 14px;border-radius:10px;cursor:pointer;margin-bottom:14px}
-.lesson h2{color:#176b3a}.key{background:#edf7f0;padding:14px;border-radius:12px;margin:15px 0}
-button.quiz{background:#176b3a;color:white;border:0;padding:12px 18px;border-radius:10px;cursor:pointer}
-.question{padding:15px 0;border-bottom:1px solid #e3ebe5}.result{font-weight:bold;margin-top:15px}
-footer{text-align:center;padding:25px;color:#718077;font-size:13px}
-</style>
-</head>
-<body>
-<header>
-  <h1>🧬 Etoama Biology Readings</h1>
-  <p>Learn Biology. Understand it. Remember it.</p>
-</header>
-
+:root{--g:#116b3a;--bg:#f4f8f5;--card:#fff;--ink:#173322;--muted:#68786f;--line:#dbe7de;--soft:#eaf6ee}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,Arial}header{background:linear-gradient(135deg,#0e6034,#1d8a50);color:white;padding:20px 16px}header h1{margin:0;font-size:24px}header p{margin:5px 0 0}.wrap{max-width:950px;margin:auto}nav{display:flex;gap:7px;overflow:auto;padding:9px;background:var(--card);border-bottom:1px solid var(--line)}nav button,.soft{border:0;background:var(--soft);color:var(--g);padding:10px 13px;border-radius:20px;font-weight:700;white-space:nowrap}main{padding:16px;max-width:950px;margin:auto}.page{display:none}.active{display:block}.hero,.card,.reader,.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:11px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.card{cursor:pointer}.card h3{margin:7px 0 4px}.card p{margin:0;color:var(--muted);font-size:13px}.emoji{font-size:27px}.search,input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}.primary{background:var(--g);color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:700}.bar{height:9px;background:var(--soft);border-radius:10px;overflow:hidden}.fill{height:100%;background:var(--g);width:0}.badge{font-size:12px;background:var(--soft);color:var(--g);padding:4px 8px;border-radius:20px;font-weight:700}.toolbar{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.q label{display:block;padding:7px}.dark{--bg:#101611;--card:#18221b;--ink:#edf7ef;--muted:#a9b7ad;--line:#2b3a30;--soft:#203d2a}footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style></head><body>
+<header><div class="wrap"><h1>🧬 Etoama Biology Readings</h1><p>Learn Biology. Understand it. Remember it.</p></div></header>
+<nav><button onclick="show('home')">🏠 Home</button><button onclick="show('topics')">📚 Readings</button><button onclick="show('quiz')">📝 Quiz</button><button onclick="show('mock')">🎯 Mock</button><button onclick="show('practical')">🔬 Practical</button><button onclick="show('progress')">📊 Progress</button><button onclick="dark()">🌙</button></nav>
 <main>
-<input class="search" id="search" placeholder="Search Biology topics..." oninput="filterTopics()">
-
-<div id="home">
-<h2 class="section">📚 Biology Readings</h2>
-<div class="grid" id="topics"></div>
-
-<h2 class="section">🎯 Quick Practice</h2>
-<div class="card" onclick="showLesson('quiz')">
-<div class="icon">📝</div><h3>Biology Quiz</h3><p>Test what you have learned.</p>
-</div>
-
-<h2 class="section">🔬 More Learning</h2>
-<div class="grid">
-<div class="card"><div class="icon">🔬</div><h3>Biology Practical</h3><p>Specimens, experiments and observations.</p></div>
-<div class="card"><div class="icon">🎯</div><h3>Mock Examination</h3><p>Prepare for school examinations.</p></div>
-<div class="card"><div class="icon">📊</div><h3>My Progress</h3><p>Track your learning progress.</p></div>
-</div>
-</div>
-
-<div id="lesson" class="lesson"></div>
-</main>
-<footer>© 2026 Etoama Biology Readings</footer>
-
-<script>
-const data = {
-"Cell Biology":{
-desc:"The study of cells, their structures and functions.",
-body:`<h2>Cell Biology</h2><p>A <b>cell</b> is the basic structural and functional unit of life. All living organisms are made up of one or more cells.</p>
-<div class="key"><b>Key points</b><br>• Cell membrane controls movement of substances.<br>• Cytoplasm is where many chemical reactions occur.<br>• The nucleus contains genetic material.<br>• Plant cells have a cell wall and chloroplasts.</div>
-<h3>Plant and Animal Cells</h3><p>Plant cells usually have a cellulose cell wall, chloroplasts and a large permanent vacuole. Animal cells do not have these structures in the same form.</p>`
-},
-"Nutrition":{
-desc:"How organisms obtain and use food.",
-body:`<h2>Nutrition</h2><p>Nutrition is the process by which organisms obtain and use nutrients for energy, growth, repair and maintenance.</p>
-<div class="key"><b>Important terms</b><br>Autotrophic nutrition: organisms make their own food.<br>Heterotrophic nutrition: organisms obtain food from other organisms.</div>
-<h3>Photosynthesis</h3><p>Green plants use light energy to manufacture glucose from carbon dioxide and water, with chlorophyll involved in the process.</p>`
-},
-"Respiration":{
-desc:"Release of energy from food.",
-body:`<h2>Respiration</h2><p>Respiration is the chemical process by which energy is released from food in living cells.</p>
-<div class="key"><b>Aerobic respiration</b><br>It uses oxygen and releases a large amount of energy.</div>
-<p>Respiration should not be confused with breathing. Breathing is the physical movement of air into and out of the respiratory system.</p>`
-},
-"Reproduction":{
-desc:"How organisms produce new individuals.",
-body:`<h2>Reproduction</h2><p>Reproduction is the biological process by which organisms produce offspring of their kind.</p>
-<div class="key"><b>Types</b><br>• Asexual reproduction involves one parent.<br>• Sexual reproduction normally involves the fusion of male and female gametes.</div>
-<p>Reproduction ensures the continuity of a species.</p>`
-},
-"Genetics":{
-desc:"Study of heredity and variation.",
-body:`<h2>Genetics</h2><p>Genetics is the study of heredity and variation in organisms.</p>
-<div class="key"><b>Key terms</b><br>Gene: a unit of heredity.<br>Allele: an alternative form of a gene.<br>Chromosome: a structure containing genetic material.<br>Genotype: genetic constitution of an organism.</div>`
-},
-"Ecology":{
-desc:"Relationships between organisms and their environment.",
-body:`<h2>Ecology</h2><p>Ecology is the study of interactions between organisms and their physical environment.</p>
-<div class="key"><b>Key terms</b><br>Habitat: place where an organism lives.<br>Population: organisms of the same species in an area.<br>Community: populations of different species living together.<br>Ecosystem: organisms and their physical environment interacting.</div>`
-},
-"Excretion":{
-desc:"Removal of metabolic waste products.",
-body:`<h2>Excretion</h2><p>Excretion is the removal of metabolic waste products from the body.</p>
-<div class="key"><b>Examples</b><br>Kidneys remove nitrogenous wastes and regulate water and salts.<br>Lungs remove carbon dioxide and water vapour.<br>Skin removes sweat.</div>`
-},
-"Transport System":{
-desc:"Movement of substances around organisms.",
-body:`<h2>Transport System</h2><p>Transport systems move substances such as oxygen, nutrients, hormones and waste products around organisms.</p>
-<div class="key"><b>In humans</b><br>The circulatory system consists mainly of the heart, blood and blood vessels.</div>`
-},
-"Classification":{
-desc:"Grouping organisms according to similarities and differences.",
-body:`<h2>Classification</h2><p>Biological classification is the systematic grouping of organisms based on similarities, differences and evolutionary relationships.</p>
-<div class="key"><b>Why classify?</b><br>It makes identification easier and helps scientists communicate about organisms.</div>`
-},
-"Microbiology":{
-desc:"Study of microscopic organisms.",
-body:`<h2>Microbiology</h2><p>Microbiology is the study of microorganisms, including bacteria, fungi, protozoa and some microscopic algae.</p>
-<div class="key"><b>Important</b><br>Microorganisms can be beneficial, harmful, or both depending on the organism and circumstances.</div>`
-}
-};
-
-const topicsEl=document.getElementById("topics");
-function renderTopics(filter=""){
- topicsEl.innerHTML="";
- Object.entries(data).filter(([k,v])=>(k+" "+v.desc).toLowerCase().includes(filter.toLowerCase())).forEach(([k,v])=>{
-  topicsEl.innerHTML += `<div class="card" onclick="showLesson('${k}')"><div class="icon">📖</div><h3>${k}</h3><p>${v.desc}</p></div>`;
- });
-}
-function showLesson(name){
- document.getElementById("home").style.display="none";
- const l=document.getElementById("lesson"); l.style.display="block";
- if(name==="quiz"){l.innerHTML=quizHTML();return}
- l.innerHTML=`<button class="back" onclick="goHome()">← Back to topics</button>${data[name].body}
- <div class="key"><b>Revision tip:</b> Read the topic, write down the key points, then test yourself without looking at the notes.</div>
- <button class="quiz" onclick="showLesson('quiz')">Take a Quiz →</button>`;
- window.scrollTo(0,0);
-}
-function goHome(){document.getElementById("lesson").style.display="none";document.getElementById("home").style.display="block";window.scrollTo(0,0)}
-function filterTopics(){renderTopics(document.getElementById("search").value)}
-function quizHTML(){return `<button class="back" onclick="goHome()">← Back</button><h2>📝 Biology Quiz</h2>
-<div class="question"><b>1. What is the basic structural unit of life?</b><br><label><input type="radio" name="q1" value="a"> Tissue</label><br><label><input type="radio" name="q1" value="b"> Cell</label><br><label><input type="radio" name="q1" value="c"> Organ</label></div>
-<div class="question"><b>2. Which organelle contains genetic material in a typical eukaryotic cell?</b><br><label><input type="radio" name="q2" value="a"> Nucleus</label><br><label><input type="radio" name="q2" value="b"> Ribosome</label><br><label><input type="radio" name="q2" value="c"> Cell wall</label></div>
-<div class="question"><b>3. What is the main purpose of respiration?</b><br><label><input type="radio" name="q3" value="a"> Release energy</label><br><label><input type="radio" name="q3" value="b"> Produce sunlight</label><br><label><input type="radio" name="q3" value="c"> Make chromosomes</label></div>
-<button class="quiz" onclick="markQuiz()">Submit Quiz</button><div id="result" class="result"></div>`}
-function markQuiz(){
- let answers={q1:"b",q2:"a",q3:"a"},score=0;
- for(let q in answers){let x=document.querySelector(`input[name="${q}"]:checked`);if(x&&x.value===answers[q])score++}
- document.getElementById("result").textContent=`Your score: ${score}/3`;
-}
-renderTopics();
-</script>
-</body>
-</html>
+<section id="home" class="page active"><div class="hero"><h2>Welcome 👋</h2><p>Study SS1, SS2 and SS3 Biology with simple lessons, practical revision and exam practice.</p><button class="primary" onclick="show('topics')">Start Reading</button></div><div class="hero"><b id="pct">0% topics completed</b><div class="bar"><div id="fill" class="fill"></div></div><p id="results"></p></div><h2>Study by class</h2><div class="grid"><div class="card" onclick="level='SS1';show('topics')"><div class="emoji">1️⃣</div><h3>SS1</h3><p>Biology foundation topics.</p></div><div class="card" onclick="level='SS2';show('topics')"><div class="emoji">2️⃣</div><h3>SS2</h3><p>Genetics, reproduction and response.</p></div><div class="card" onclick="level='SS3';show('topics')"><div class="emoji">3️⃣</div><h3>SS3</h3><p>Ecology, health and practicals.</p></div></div></section>
+<section id="topics" class="page"><h2>📚 Biology Readings</h2><input id="search" class="search" placeholder="Search topic..." oninput="renderTopics()"><div class="toolbar"><button class="soft" onclick="level='ALL';renderTopics()">All</button><button class="soft" onclick="level='SS1';renderTopics()">SS1</button><button class="soft" onclick="level='SS2';renderTopics()">SS2</button><button class="soft" onclick="level='SS3';renderTopics()">SS3</button></div><div id="topicGrid" class="grid"></div></section>
+<section id="reader" class="page"><div id="readerBox"></div></section>
+<section id="quiz" class="page"><h2>📝 Practice Quiz</h2><select id="qt"></select><div class="toolbar"><button class="primary" onclick="quiz()">Generate 10 Questions</button></div><div id="quizBox"></div></section>
+<section id="mock" class="page"><h2>🎯 Mock Exam</h2><div class="hero"><p>20 randomized Biology questions.</p><button class="primary" onclick="mock()">Start Mock Exam</button></div><div id="mockBox"></div></section>
+<section id="practical" class="page"><h2>🔬 Biology Practical</h2><div id="practicalGrid" class="grid"></div></section>
+<section id="progress" class="page"><h2>📊 My Progress</h2><div id="progressBox"></div></section>
+</main><footer>© 2026 Etoama Biology Readings — Version 2</footer>
+<script src="data.js"></script><script>
+let level="ALL",S=JSON.parse(localStorage.getItem("ebrV2")||'{"read":[],"scores":[]}');
+const save=()=>localStorage.setItem("ebrV2",JSON.stringify(S));
+function show(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");if(id==="topics")renderTopics();if(id==="quiz"){fillSelect();quiz()}if(id==="practical")renderPractical();if(id==="progress")renderProgress();window.scrollTo(0,0)}
+function allTopics(){let a=[];for(let l in DATA.levels)DATA.levels[l].forEach(t=>a.push({level:l,name:t[0],icon:t[1],desc:t[2]}));return a}
+function renderTopics(){let f=(document.getElementById("search")?.value||"").toLowerCase(),a=allTopics().filter(t=>(level==="ALL"||t.level===level)&&(t.name+" "+t.desc).toLowerCase().includes(f));document.getElementById("topicGrid").innerHTML=a.map(t=>`<div class="card" onclick="read('${t.name.replace(/'/g,"\\'")}')"><div class="emoji">${t.icon}</div><span class="badge">${t.level}</span><h3>${t.name}</h3><p>${t.desc}</p>${S.read.includes(t.name)?'<span class="badge">✓ Read</span>':''}</div>`).join("")}
+function read(name){let t=allTopics().find(x=>x.name===name);if(!S.read.includes(name))S.read.push(name);save();document.getElementById("readerBox").innerHTML=`<div class="reader"><button class="soft" onclick="show('topics')">← Back</button><h2>${t.icon} ${t.name}</h2><span class="badge">${t.level}</span><p>${t.desc}</p><h3>Revision guide</h3><p>Learn the definition, structures involved, functions, major processes, examples and examination applications. After reading, explain the topic without looking at your notes.</p><div class="hero"><b>Quick checklist</b><ul><li>Know the key definitions.</li><li>Know the structures and functions.</li><li>Practise labelled diagrams where relevant.</li><li>Attempt questions after studying.</li></ul></div><button class="primary" onclick="show('quiz');setTimeout(()=>{document.getElementById('qt').value='${name.replace(/'/g,"\\'")}';quiz()},50)">Practice this topic</button></div>`;show("reader");updateHome()}
+function fillSelect(){document.getElementById("qt").innerHTML='<option value="ALL">Mixed Biology</option>'+allTopics().map(t=>`<option>${t.name}</option>`).join("")}
+function pick(a,n){return [...a].sort(()=>Math.random()-.5).slice(0,n)}
+function quiz(){let topic=document.getElementById("qt").value||"ALL",pool=DATA.questions.filter(q=>topic==="ALL"||q[0]===topic);if(pool.length<10)pool=DATA.questions;let qs=pick(pool,10);document.getElementById("quizBox").innerHTML=qs.map((q,i)=>`<div class="q"><b>${i+1}. ${q[1]}</b><label><input type="radio" name="q${i}" value="A"> ${q[2]}</label><label><input type="radio" name="q${i}" value="B"> ${q[3]}</label><label><input type="radio" name="q${i}" value="C"> ${q[4]}</label><input type="hidden" id="a${i}" value="${q[5]}"></div>`).join("")+'<button class="primary" onclick="markQuiz('+qs.length+',\''+topic.replace(/'/g,"\\'")+'\')">Submit Quiz</button><div id="qr" class="hero"></div>'}
+function markQuiz(n,topic){let s=0;for(let i=0;i<n;i++){let x=document.querySelector('input[name="q'+i+'"]:checked');if(x&&x.value===document.getElementById("a"+i).value)s++}S.scores.push({type:"Quiz",topic,score:s,total:n,date:new Date().toLocaleDateString()});save();document.getElementById("qr").innerHTML='<b>'+s+'/'+n+' ('+Math.round(s/n*100)+'%)</b><p>Review the topic and try again to improve your score.</p>';updateHome()}
+function mock(){let qs=pick(DATA.questions,20);document.getElementById("mockBox").innerHTML=qs.map((q,i)=>`<div class="q"><b>${i+1}. ${q[1]}</b><label><input type="radio" name="m${i}" value="A"> ${q[2]}</label><label><input type="radio" name="m${i}" value="B"> ${q[3]}</label><label><input type="radio" name="m${i}" value="C"> ${q[4]}</label><input type="hidden" id="ma${i}" value="${q[5]}"></div>`).join("")+'<button class="primary" onclick="markMock('+qs.length+')">Submit Mock</button><div id="mr" class="hero"></div>'}
+function markMock(n){let s=0;for(let i=0;i<n;i++){let x=document.querySelector('input[name="m'+i+'"]:checked');if(x&&x.value===document.getElementById("ma"+i).value)s++}S.scores.push({type:"Mock",topic:"Mixed Biology",score:s,total:n,date:new Date().toLocaleDateString()});save();document.getElementById("mr").innerHTML='<b>'+s+'/'+n+' ('+Math.round(s/n*100)+'%)</b>';updateHome()}
+function renderPractical(){document.getElementById("practicalGrid").innerHTML=DATA.practicals.map(p=>`<div class="card"><div class="emoji">🔬</div><h3>${p[0]}</h3><p>${p[1]}</p></div>`).join("")}
+function renderProgress(){let n=allTopics().length,d=S.read.length,p=Math.round(d/n*100),r=S.scores.slice(-10).reverse();document.getElementById("progressBox").innerHTML='<div class="hero"><b>'+d+'/'+n+' topics completed — '+p+'%</b><div class="bar"><div class="fill" style="width:'+p+'%"></div></div></div><div class="hero"><h3>Recent scores</h3>'+(r.length?r.map(x=>'<p>'+x.date+' — '+x.type+' — '+x.topic+' — <b>'+x.score+'/'+x.total+'</b></p>').join(""):'<p>No quiz results yet.</p>')+'</div>'}
+function updateHome(){let n=allTopics().length,p=Math.round(S.read.length/n*100);document.getElementById("pct").textContent=p+"% topics completed";document.getElementById("fill").style.width=p+"%";document.getElementById("results").textContent=S.scores.length+" quiz/mock results saved on this device."}
+function dark(){document.body.classList.toggle("dark");localStorage.setItem("ebrDark2",document.body.classList.contains("dark"))}
+if(localStorage.getItem("ebrDark2")==="true")document.body.classList.add("dark");renderTopics();renderPractical();updateHome();
+</script></body></html>
